@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)file:///C:/Users/HxTos/Downloads/IMDG-Navigator.html -->
+<html lang="pt-br"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMDG Compatibility - HXtos CY</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+        .header { background: linear-gradient(135deg, #0f8fa6, #0d7a8f); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        .layout { display: grid; grid-template-columns: 250px 1fr; gap: 20px; }
+        .sidebar { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .sidebar-title { background: #0f8fa6; color: white; padding: 15px; font-weight: bold; }
+        .class-list { max-height: 600px; overflow-y: auto; }
+        .class-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .class-item:hover { background: #f0f7f9; padding-left: 20px; }
+        .class-item.active { background: #0f8fa6; color: white; font-weight: bold; }
+        .panel { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; }
+        .details-title { color: #0f8fa6; font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #0f8fa6; padding-bottom: 10px; }
+        .section { margin-bottom: 20px; }
+        .section-header { font-weight: bold; margin-bottom: 10px; font-size: 13px; }
+        .prohibited { color: #d32f2f; }
+        .restricted { color: #f57c00; }
+        .compatible { color: #388e3c; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .tag-prohibited { background: #ffebee; color: #c62828; border: 1px solid #ef5350; }
+        .tag-restricted { background: #fff3e0; color: #e65100; border: 1px solid #ffb74d; }
+        .tag-compatible { background: #e8f5e9; color: #2e7d32; border: 1px solid #81c784; }
+        .matrix { margin-top: 30px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; overflow-x: auto; }
+        .matrix-title { color: #0f8fa6; font-weight: bold; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { padding: 8px; text-align: center; border: 1px solid #ddd; }
+        th { background: #f0f7f9; color: #0f8fa6; font-weight: bold; }
+        .cell-ok { background: #e8f5e9; color: #2e7d32; font-weight: bold; }
+        .cell-warn { background: #fff3e0; color: #e65100; font-weight: bold; }
+        .cell-bad { background: #ffebee; color: #c62828; font-weight: bold; }
+        .empty { text-align: center; padding: 40px; color: #999; }
+        @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } .class-list { max-height: 300px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 IMDG Compatibility Navigator</h1>
+        <p>Matriz de Compatibilidade de Carga Perigosa - HXtos CY</p>
+    </div>
+
+    <div class="container">
+        <div class="layout">
+            <div class="sidebar">
+                <div class="sidebar-title">🏷️ Classes IMDG</div>
+                <div class="class-list" id="classList"><div class="class-item" onclick="selectClass(1)">Classe 1 – Explosivos</div><div class="class-item" onclick="selectClass(2)">Classe 2 – Gases</div><div class="class-item" onclick="selectClass(3)">Classe 3 – Líquidos Inflamáveis</div><div class="class-item" onclick="selectClass(4)">Classe 4 – Sólidos Inflamáveis</div><div class="class-item" onclick="selectClass(5)">Classe 5 – Combustíveis Espontâneos</div><div class="class-item" onclick="selectClass(6)">Classe 6 – Perigosos para Água</div><div class="class-item" onclick="selectClass(7)">Classe 7 – Oxidantes</div><div class="class-item" onclick="selectClass(8)">Classe 8 – Peróxidos Orgânicos</div><div class="class-item" onclick="selectClass(9)">Classe 9 – Tóxicas</div></div>
+            </div>
+
+            <div class="panel">
+                <div id="emptyState" class="empty">👈 Clique em uma classe para ver suas compatibilidades</div>
+                <div id="details" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="matrix">
+            <div class="matrix-title">📊 Matriz de Compatibilidade Completa</div>
+            <table id="matrixTable"><tbody><tr><th>Classe</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><th>1</th><td class="cell-ok">✅</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td></tr><tr><th>2</th><td class="cell-bad">🚫</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td></tr><tr><th>3</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td></tr><tr><th>4</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td></tr><tr><th>5</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td></tr><tr><th>6</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td></tr><tr><th>7</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td></tr><tr><th>8</th><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td></tr><tr><th>9</th><td class="cell-bad">🚫</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-bad">🚫</td><td class="cell-ok">✅</td><td class="cell-warn">⚠️</td><td class="cell-warn">⚠️</td><td class="cell-ok">✅</td></tr></tbody></table>
+        </div>
+    </div>
+
+    <script>
+        const classes = [
+            { id: 1, name: "Explosivos", desc: "Substâncias e artigos com propriedades explosivas", prohibited: [2,3,4,5,6,7,8,9], restricted: [] },
+            { id: 2, name: "Gases", desc: "Gases comprimidos, liquefeitos ou dissolvidos", prohibited: [1,8], restricted: [3,4,5,6,7,9] },
+            { id: 3, name: "Líquidos Inflamáveis", desc: "Líquidos com ponto de fulgor baixo", prohibited: [1,5,7,8], restricted: [2,4,6,9] },
+            { id: 4, name: "Sólidos Inflamáveis", desc: "Sólidos que podem inflamar facilmente", prohibited: [1,7,8], restricted: [2,3,5,6,9] },
+            { id: 5, name: "Combustíveis Espontâneos", desc: "Substâncias que se inflamam espontaneamente", prohibited: [1,7,8,9], restricted: [2,3,4,6] },
+            { id: 6, name: "Perigosos para Água", desc: "Substâncias que reagem perigosamente com água", prohibited: [1], restricted: [2,3,4,5,7,8] },
+            { id: 7, name: "Oxidantes", desc: "Substâncias que podem causar ou intensificar fogo", prohibited: [1,3,4,5,8], restricted: [2,6,9] },
+            { id: 8, name: "Peróxidos Orgânicos", desc: "Compostos orgânicos contendo estrutura O-O", prohibited: [1,2,3,4,5,7], restricted: [6,9] },
+            { id: 9, name: "Tóxicas", desc: "Substâncias que podem causar morte ou danos graves", prohibited: [1,5], restricted: [2,3,4,7,8] }
+        ];
+
+        function getStatus(a, b) {
+            if (a === b) return 'ok';
+            const classA = classes.find(c => c.id === a);
+            if (!classA) return 'ok';
+            if (classA.prohibited.includes(b)) return 'bad';
+            if (classA.restricted.includes(b)) return 'warn';
+            return 'ok';
+        }
+
+        function renderList() {
+            const html = classes.map(c => `<div class="class-item" onclick="selectClass(${c.id})">Classe ${c.id} – ${c.name}</div>`).join('');
+            document.getElementById('classList').innerHTML = html;
+        }
+
+        function selectClass(id) {
+            const c = classes.find(x => x.id === id);
+            document.querySelectorAll('.class-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let html = `<div class="details-title">Classe ${c.id} – ${c.name}</div><p style="margin-bottom: 15px; color: #666;">${c.desc}</p>`;
+
+            if (c.prohibited.length > 0) {
+                html += `<div class="section"><div class="section-header prohibited">🚫 PROIBIDO COM:</div><div class="tags">`;
+                c.prohibited.forEach(id => {
+                    const cls = classes.find(x => x.id === id);
+                    html += `<div class="tag tag-prohibited">Classe ${id} – ${cls.name}</div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            if (c.restricted.length > 0) {
+                html += `<div class="section"><div class="section-header restricted">⚠️ RESTRITO COM:</div><div class="tags">`;
+                c.restricted.forEach(id => {
+                    const cls = classes.find(x => x.id === id);
+                    html += `<div class="tag tag-restricted">Classe ${id} – ${cls.name}</div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            const compatible = classes.filter(x => x.id !== id && !c.prohibited.includes(x.id) && !c.restricted.includes(x.id));
+            if (compatible.length > 0) {
+                html += `<div class="section"><div class="section-header compatible">✅ COMPATÍVEL COM:</div><div class="tags">`;
+                compatible.forEach(x => {
+                    html += `<div class="tag tag-compatible">Classe ${x.id} – ${x.name}</div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('details').style.display = 'block';
+            document.getElementById('details').innerHTML = html;
+        }
+
+        function renderMatrix() {
+            let html = '<tr><th>Classe</th>';
+            classes.forEach(c => html += `<th>${c.id}</th>`);
+            html += '</tr>';
+
+            classes.forEach(row => {
+                html += `<tr><th>${row.id}</th>`;
+                classes.forEach(col => {
+                    const status = getStatus(row.id, col.id);
+                    const symbol = status === 'ok' ? '✅' : status === 'warn' ? '⚠️' : '🚫';
+                    const cellClass = `cell-${status}`;
+                    html += `<td class="${cellClass}">${symbol}</td>`;
+                });
+                html += '</tr>';
+            });
+
+            document.getElementById('matrixTable').innerHTML = html;
+        }
+
+        renderList();
+        renderMatrix();
+    </script>
+
+
+</body></html>
